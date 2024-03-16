@@ -73,6 +73,8 @@ int main(void)
     // initialize the device
     SYSTEM_Initialize();
     CS_6820_SetHigh();
+
+    MSTR_SetHigh();
     
     uint8_t i = 0;
     for(i = 0; i < NUM_CELLS; ++i)

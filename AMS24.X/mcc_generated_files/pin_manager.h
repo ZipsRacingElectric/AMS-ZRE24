@@ -2263,11 +2263,11 @@
   @Example
     <code>
     // Set RC7 high (1)
-    LED8_SetHigh();
+    INTER_SetHigh();
     </code>
 
 */
-#define LED8_SetHigh()          (_LATC7 = 1)
+#define INTER_SetHigh()          (_LATC7 = 1)
 /**
   @Summary
     Sets the GPIO pin, RC7, low using LATC7.
@@ -2287,11 +2287,11 @@
   @Example
     <code>
     // Set RC7 low (0)
-    LED8_SetLow();
+    INTER_SetLow();
     </code>
 
 */
-#define LED8_SetLow()           (_LATC7 = 0)
+#define INTER_SetLow()           (_LATC7 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RC7, using LATC7.
@@ -2311,11 +2311,11 @@
   @Example
     <code>
     // Toggle RC7
-    LED8_Toggle();
+    INTER_Toggle();
     </code>
 
 */
-#define LED8_Toggle()           (_LATC7 ^= 1)
+#define INTER_Toggle()           (_LATC7 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RC7.
@@ -2337,11 +2337,11 @@
     uint16_t portValue;
 
     // Read RC7
-    postValue = LED8_GetValue();
+    postValue = INTER_GetValue();
     </code>
 
 */
-#define LED8_GetValue()         _RC7
+#define INTER_GetValue()         _RC7
 /**
   @Summary
     Configures the GPIO pin, RC7, as an input.
@@ -2361,11 +2361,11 @@
   @Example
     <code>
     // Sets the RC7 as an input
-    LED8_SetDigitalInput();
+    INTER_SetDigitalInput();
     </code>
 
 */
-#define LED8_SetDigitalInput()  (_TRISC7 = 1)
+#define INTER_SetDigitalInput()  (_TRISC7 = 1)
 /**
   @Summary
     Configures the GPIO pin, RC7, as an output.
@@ -2385,11 +2385,11 @@
   @Example
     <code>
     // Sets the RC7 as an output
-    LED8_SetDigitalOutput();
+    INTER_SetDigitalOutput();
     </code>
 
 */
-#define LED8_SetDigitalOutput() (_TRISC7 = 0)
+#define INTER_SetDigitalOutput() (_TRISC7 = 0)
 /**
   @Summary
     Sets the GPIO pin, RC8, high using LATC8.
@@ -2409,11 +2409,11 @@
   @Example
     <code>
     // Set RC8 high (1)
-    LED7_SetHigh();
+    MSTR_SetHigh();
     </code>
 
 */
-#define LED7_SetHigh()          (_LATC8 = 1)
+#define MSTR_SetHigh()          (_LATC8 = 1)
 /**
   @Summary
     Sets the GPIO pin, RC8, low using LATC8.
@@ -2433,11 +2433,11 @@
   @Example
     <code>
     // Set RC8 low (0)
-    LED7_SetLow();
+    MSTR_SetLow();
     </code>
 
 */
-#define LED7_SetLow()           (_LATC8 = 0)
+#define MSTR_SetLow()           (_LATC8 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RC8, using LATC8.
@@ -2457,11 +2457,11 @@
   @Example
     <code>
     // Toggle RC8
-    LED7_Toggle();
+    MSTR_Toggle();
     </code>
 
 */
-#define LED7_Toggle()           (_LATC8 ^= 1)
+#define MSTR_Toggle()           (_LATC8 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RC8.
@@ -2483,11 +2483,11 @@
     uint16_t portValue;
 
     // Read RC8
-    postValue = LED7_GetValue();
+    postValue = MSTR_GetValue();
     </code>
 
 */
-#define LED7_GetValue()         _RC8
+#define MSTR_GetValue()         _RC8
 /**
   @Summary
     Configures the GPIO pin, RC8, as an input.
@@ -2507,11 +2507,11 @@
   @Example
     <code>
     // Sets the RC8 as an input
-    LED7_SetDigitalInput();
+    MSTR_SetDigitalInput();
     </code>
 
 */
-#define LED7_SetDigitalInput()  (_TRISC8 = 1)
+#define MSTR_SetDigitalInput()  (_TRISC8 = 1)
 /**
   @Summary
     Configures the GPIO pin, RC8, as an output.
@@ -2531,11 +2531,11 @@
   @Example
     <code>
     // Sets the RC8 as an output
-    LED7_SetDigitalOutput();
+    MSTR_SetDigitalOutput();
     </code>
 
 */
-#define LED7_SetDigitalOutput() (_TRISC8 = 0)
+#define MSTR_SetDigitalOutput() (_TRISC8 = 0)
 /**
   @Summary
     Sets the GPIO pin, RC9, high using LATC9.

@@ -69,9 +69,9 @@
 #pragma config PLLKEN = ON    //PLL Lock Enable Bit->Clock switch to PLL source will wait until the PLL lock signal is valid
 
 // FWDT
-#pragma config WDTPOST = PS32768    //Watchdog Timer Postscaler bits->1:32768
+#pragma config WDTPOST = PS256    //Watchdog Timer Postscaler bits->1:256
 #pragma config WDTPRE = PR128    //Watchdog Timer Prescaler bit->1:128
-#pragma config WDTEN = OFF    //Watchdog Timer Enable bits->WDT and SWDTEN disabled
+#pragma config WDTEN = ON    //Watchdog Timer Enable bits->WDT Enabled
 #pragma config WINDIS = OFF    //Watchdog Timer Window Enable bit->Watchdog Timer in Non-Window mode
 #pragma config WDTWIN = WIN25    //Watchdog Timer Window Select bits->WDT Window is 25% of WDT period
 
@@ -103,28 +103,28 @@
 #include "clock.h"
 #include "system.h"
 #include "system_types.h"
-#include "dma.h"
 #include "tmr2.h"
 #include "tmr1.h"
+#include "can2.h"
+#include "can1.h"
+#include "spi1.h"
+#include "dma.h"
+#include "adc1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
-#include "spi1.h"
-#include "can1.h"
-#include "can2.h"
-#include "adc1.h"
 
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
-    INTERRUPT_Initialize();
     CLOCK_Initialize();
+    INTERRUPT_Initialize();
     SPI1_Initialize();
     ADC1_Initialize();
     CAN2_Initialize();
     CAN1_Initialize();
     TMR2_Initialize();
-    DMA_Initialize();
     TMR1_Initialize();
+    DMA_Initialize();
     INTERRUPT_GlobalEnable();
     SYSTEM_CORCONModeOperatingSet(CORCON_MODE_PORVALUES);
 }

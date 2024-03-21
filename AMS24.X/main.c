@@ -86,6 +86,8 @@ int main(void)
         sense_line_status[i] = 0;
     }
 
+    MSTR_SetHigh();
+
     eeprom_initialize(); // TODO call this in soc init?
     soc_initialize();
     can_initialize();
@@ -95,6 +97,7 @@ int main(void)
     
     while (1)
     {
+        ClrWdt();
         LED1_HEARTBEAT_Toggle();
         // WARN: don't put all the CAN output back to back to back here, 
         //       the transmit buffers will overflow
@@ -113,7 +116,7 @@ int main(void)
         
         open_sense_line_check(sense_line_status);
         report_sense_line_status(sense_line_status);
-        
+
         self_test();
         
         check_for_fault();

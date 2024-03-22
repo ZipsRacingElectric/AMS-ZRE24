@@ -69,8 +69,12 @@ void init_cfgr_A_and_B_buffers(void)
     }
 }
 
-// Generic wakeup command to wake the LTC681x from sleep state
-// wakeup time depends on number of chips in daisy chain
+/*
+* Generic wakeup command to wake the LTC681x from sleep state
+* wakeup time depends on number of chips in daisy chain
+* Chips that are being checked on are the Sense boards
+*/
+
 void wakeup_daisychain(void) 
 {
     uint8_t i = 0;

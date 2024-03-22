@@ -37,7 +37,7 @@ void can_initialize(void)
     CAN2_STDBY_SetLow();
 }
 
-// put cell voltages on BMS CAN bus
+// put cell voltages on MAIN CAN bus
 void report_cell_voltages(uint16_t* cell_voltages)
 {
     uint8_t i = 0;

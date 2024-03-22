@@ -86,6 +86,9 @@ int main(void)
         sense_line_status[i] = 0;
     }
 
+    /*
+    *   In the datasheet, it says to set the MSTR bit high for controller mode
+    */
     MSTR_SetHigh();
 
     eeprom_initialize(); // TODO call this in soc init?
@@ -103,6 +106,7 @@ int main(void)
         //       the transmit buffers will overflow
         calc_soc();
         
+        // read cell voltages from isoSPI and report them to the MAIN CAN bus
         read_cell_voltages(cell_voltages);
         report_cell_voltages(cell_voltages);
         

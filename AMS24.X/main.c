@@ -87,9 +87,9 @@ int main(void)
     }
 
     /*
-    *   In the datasheet, it says to set the MSTR bit high for controller mode
+    *   In the datasheet, it says to set the MSTR bit low for perihpeheral mode
     */
-    MSTR_SetHigh();
+    MSTR_SetLow();
 
     eeprom_initialize(); // TODO call this in soc init?
     soc_initialize();

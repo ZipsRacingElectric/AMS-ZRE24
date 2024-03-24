@@ -41,7 +41,7 @@ static void shutdown_car(void);
 // initialize fault tracking arrays, enable BMS shutdown loop relay
 void fault_handler_initialize(void) //TODO make sure all these for loop ranges are correct
 {
-    BMS_RELAY_EN_SetLow();
+    BMS_RELAY_EN_SetHigh();
 //    LED8_SetHigh();
 //    __delay_ms(500);
 //    LED8_SetLow();
@@ -84,7 +84,7 @@ void fault_handler_initialize(void) //TODO make sure all these for loop ranges a
         mux_self_test_fault[i] = 0;
     }
 
-    BMS_RELAY_EN_SetHigh();
+    BMS_RELAY_EN_SetLow();
 }
 
 uint8_t get_fault_codes(void)
@@ -123,27 +123,19 @@ void check_for_fault(void)
     
     for(i = 0; i < NUM_ICS * TEMP_SENSORS_PER_IC; ++i)
     {
-        // TODO: Temp sensor #4 is broken, temporary fix
-        if(i != 3)
+        if(outofrange_temperature_fault[i] > OUTOFRANGE_TEMPERATURE_MAX_FAULTS)
         {
-            if(outofrange_temperature_fault[i] > OUTOFRANGE_TEMPERATURE_MAX_FAULTS)
-            {
-                shutdown_car();
-                set_temperature_fault_bit();
-            }
+            shutdown_car();
+            set_temperature_fault_bit();
         }
     }
     
     for(i = 0; i < NUM_ICS * AUX_REGISTERS_PER_IC; ++i)
     {
-        // TODO: Temp sensor #4 is broken, temporary fix
-        if(i != 3)
+        if(missing_temperature_measurement_fault[i] > MISSING_TEMP_MEASUREMENT_FAULTS_MAX)
         {
-            if(missing_temperature_measurement_fault[i] > MISSING_TEMP_MEASUREMENT_FAULTS_MAX)
-            {
-                shutdown_car(); 
-                set_temperature_fault_bit();
-            }   
+            shutdown_car(); 
+            set_temperature_fault_bit();
         }
     }
     
@@ -292,5 +284,5 @@ static void shutdown_car(void)
     // turn off all balancing
     disable_cell_balancing();
     // open shutdown loop
-    BMS_RELAY_EN_SetLow();
+    BMS_RELAY_EN_SetHigh();
 }

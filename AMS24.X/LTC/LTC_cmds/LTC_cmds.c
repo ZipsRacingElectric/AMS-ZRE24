@@ -479,7 +479,7 @@ uint8_t read_status_B(uint8_t* buffer)
     for(i = 0; i < 10; ++i) // 10 tries to get valid PEC
     {
         CS_6820_SetLow();
-        SPI1_Exchange8bitBuffer(cmd, CMD_SIZE_BYTES, dummy_buf);
+            SPI1_Exchange8bitBuffer(cmd, CMD_SIZE_BYTES, dummy_buf);
         uint8_t intermediate_buffer[8 * NUM_ICS];
         SPI1_Exchange8bitBuffer(dummy_buf, 8*NUM_ICS, intermediate_buffer); 
         // 6 data bytes plus 2 byte PEC

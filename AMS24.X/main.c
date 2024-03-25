@@ -97,6 +97,7 @@ int main(void)
     
     while (1)
     {
+        ClrWdt();
         LED1_HEARTBEAT_Toggle();
         // WARN: don't put all the CAN output back to back to back here, 
         //       the transmit buffers will overflow
@@ -115,7 +116,7 @@ int main(void)
         
         open_sense_line_check(sense_line_status);
         report_sense_line_status(sense_line_status);
-        
+
         self_test();
         
         check_for_fault();
@@ -135,6 +136,12 @@ int main(void)
         }
         uint8_t high_temp = (uint8_t)((-0.0021933) * low_div_output + 81.297);
         report_status(pack_voltage / 10, high_temp);
+        
+        // watchdog
+        int wdt_test = 0;
+        while(wdt_test) {
+            Nop();
+        }
     }
     return 1; 
 }

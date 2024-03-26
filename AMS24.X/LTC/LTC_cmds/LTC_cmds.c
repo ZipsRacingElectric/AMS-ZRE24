@@ -376,7 +376,7 @@ void write_config_A(void)
     uint8_t i = 0;
     for(i = 0; i < NUM_ICS; ++i)
     {
-        uint8_t* data_to_write = get_cfgra_write_buffer(i);
+        uint8_t* data_to_write = get_cfgra_write_buffer(NUM_ICS - i - 1);
         uint16_t data_pec = pec15_calc(data_to_write, 6);
         uint8_t data_pec_transmit[2] = {(uint8_t)(data_pec >> 8), (uint8_t)(data_pec & 0xFF)};    
 
@@ -406,7 +406,7 @@ void write_config_B(void)
     uint8_t i = 0;
     for(i = 0; i < NUM_ICS; ++i)
     {
-        uint8_t* data_to_write = get_cfgrb_write_buffer(i);
+        uint8_t* data_to_write = get_cfgrb_write_buffer(NUM_ICS - i - 1);
 
         uint16_t data_pec = pec15_calc(data_to_write, 6);
         uint8_t data_pec_transmit[2] = {(uint8_t)(data_pec >> 8), (uint8_t)(data_pec & 0xFF)};    
@@ -479,7 +479,7 @@ uint8_t read_status_B(uint8_t* buffer)
     for(i = 0; i < 10; ++i) // 10 tries to get valid PEC
     {
         CS_6820_SetLow();
-        SPI1_Exchange8bitBuffer(cmd, CMD_SIZE_BYTES, dummy_buf);
+            SPI1_Exchange8bitBuffer(cmd, CMD_SIZE_BYTES, dummy_buf);
         uint8_t intermediate_buffer[8 * NUM_ICS];
         SPI1_Exchange8bitBuffer(dummy_buf, 8*NUM_ICS, intermediate_buffer); 
         // 6 data bytes plus 2 byte PEC

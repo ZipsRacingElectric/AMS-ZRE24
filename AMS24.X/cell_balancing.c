@@ -58,14 +58,6 @@ void update_cell_balance_array(uint16_t* cell_voltages)
         return;
     }
     
-    /**
-     * @brief Balances the cells based on their voltages.
-     *
-     * iterates through the cell voltages and determines if a cell needs to be balanced
-     * based on a minimum voltage threshold. The result is stored in the `cell_needs_balanced` array.
-     *
-     */
-
     for(i = 0; i < NUM_ICS; ++i)
     {
         uint8_t k = 0;

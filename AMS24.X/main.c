@@ -57,13 +57,11 @@
 #include "cell_balancing.h"
 #include "global_constants.h"
 #include "eeprom.h"
-#include "current_limiting.h"
 
 //TODO why are these globals?
-uint8_t wdt_test = 0;
-uint16_t cell_voltages[NUM_CELLS]; // Stored as cell voltage * 10
-uint16_t pack_temperatures[NUM_TEMP_SENSORS]; // Stored as deg C * 10
-uint32_t sense_line_status[NUM_ICS]; // Stored as ??
+uint16_t cell_voltages[NUM_CELLS];
+uint16_t pack_temperatures[NUM_TEMP_SENSORS];
+uint32_t sense_line_status[NUM_ICS];
 
 /*
                          Main application
@@ -73,7 +71,7 @@ int main(void)
     // initialize the device
     SYSTEM_Initialize();
     CS_6820_SetHigh();
-
+    
     MSTR_SetHigh();
     
     uint8_t i = 0;
@@ -99,42 +97,35 @@ int main(void)
     
     while (1)
     {
+        ClrWdt();
         LED1_HEARTBEAT_Toggle();
         // WARN: don't put all the CAN output back to back to back here, 
         //       the transmit buffers will overflow
         calc_soc();
         
-        // read cell voltages
         read_cell_voltages(cell_voltages);
         report_cell_voltages(cell_voltages);
         
-        // cell balancing
         update_cell_balance_array(cell_voltages);
         uint32_t* cell_needs_balanced = get_cell_balance_array();
         update_config_A_and_B(); // sends cell balance bits to 6813s
         report_balancing(cell_needs_balanced);
 
-        // pack temperatures
         read_temperatures(pack_temperatures);
         report_pack_temperatures(pack_temperatures);
         
-        // open sense line check
         open_sense_line_check(sense_line_status);
         report_sense_line_status(sense_line_status);
-        
-        // self check
+
         self_test();
-        check_for_fault();
         
-        // update total pack voltage
+        check_for_fault();
         uint16_t pack_voltage = 0;
         uint8_t i = 0;
         for(i = 0; i < NUM_CELLS; ++i)
         {
             pack_voltage += (cell_voltages[i] / 1000);
         }
-        
-        // calculate highest pack temperature
         uint16_t low_div_output = 0xFFFF;
         for(i = 0; i < NUM_TEMP_SENSORS; ++i)
         {
@@ -146,21 +137,11 @@ int main(void)
         uint8_t high_temp = (uint8_t)((-0.0021933) * low_div_output + 81.297);
         report_status(pack_voltage / 10, high_temp);
         
-        // update current limits to inverter
-        uint16_t max_pack_voltage = (NUM_CELLS * (CELL_VOLTAGE_MAX / 100)) / 100;
-        uint16_t discharge_limit = get_discharge_current_limit(pack_voltage, max_pack_voltage);
-        uint16_t charge_limit = get_charge_current_limit(pack_voltage, max_pack_voltage);
-        update_current_limits(discharge_limit, charge_limit);
-        
-        // Watchdog Timer self test for tech inspection
-        if(wdt_test)
-        {
-            while(1)
-            {
-                Nop();
-            }
+        // watchdog
+        int wdt_test = 0;
+        while(wdt_test) {
+            Nop();
         }
-        ClrWdt();
     }
     return 1; 
 }

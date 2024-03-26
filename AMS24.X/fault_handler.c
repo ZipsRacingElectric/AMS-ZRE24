@@ -41,10 +41,10 @@ static void shutdown_car(void);
 // initialize fault tracking arrays, enable BMS shutdown loop relay
 void fault_handler_initialize(void) //TODO make sure all these for loop ranges are correct
 {
-    BMS_RELAY_EN_SetLow();
-    // LED8_SetHigh();
-    __delay_ms(500);
-    // LED8_SetLow();
+    BMS_RELAY_EN_SetHigh();
+//    LED8_SetHigh();
+//    __delay_ms(500);
+//    LED8_SetLow();
     
     uint8_t i = 0;
     
@@ -84,7 +84,7 @@ void fault_handler_initialize(void) //TODO make sure all these for loop ranges a
         mux_self_test_fault[i] = 0;
     }
 
-    BMS_RELAY_EN_SetHigh();
+    BMS_RELAY_EN_SetLow();
 }
 
 uint8_t get_fault_codes(void)
@@ -284,5 +284,5 @@ static void shutdown_car(void)
     // turn off all balancing
     disable_cell_balancing();
     // open shutdown loop
-    BMS_RELAY_EN_SetLow();
+    BMS_RELAY_EN_SetHigh();
 }

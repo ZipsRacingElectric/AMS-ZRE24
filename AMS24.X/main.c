@@ -59,6 +59,7 @@
 #include "eeprom.h"
 
 //TODO why are these globals?
+int wdt_test = 0;
 uint16_t cell_voltages[NUM_CELLS];
 uint16_t pack_temperatures[NUM_TEMP_SENSORS];
 uint32_t sense_line_status[NUM_ICS];
@@ -137,11 +138,20 @@ int main(void)
         uint8_t high_temp = (uint8_t)((-0.0021933) * low_div_output + 81.297);
         report_status(pack_voltage / 10, high_temp);
         
+        CAN_MSG_OBJ l;
+        bool test = CAN1_Receive(&l);
+        if (test == 1) {
+            wdt_test = 1;
+        }
+
         // watchdog
-        int wdt_test = 0;
+
         while(wdt_test) {
             Nop();
+            LED3_TMR1_Toggle();
         }
+        // set LED 3 to high
+
     }
     return 1; 
 }

@@ -19,7 +19,7 @@ extern "C" {
 #define CMD_SIZE_BYTES       4
 
 // system constants
-#define NUM_ICS                  5
+#define NUM_ICS                  3
 #define CELLS_PER_REGISTER       3
 #define CV_REGISTERS_PER_IC      6
 #define CELLS_PER_IC             18

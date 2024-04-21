@@ -657,11 +657,11 @@
   @Example
     <code>
     // Set RB5 high (1)
-    LED4_ADC_SetHigh();
+    SHUTDOWN_IN_SetHigh();
     </code>
 
 */
-#define LED4_ADC_SetHigh()          (_LATB5 = 1)
+#define SHUTDOWN_IN_SetHigh()          (_LATB5 = 1)
 /**
   @Summary
     Sets the GPIO pin, RB5, low using LATB5.
@@ -681,11 +681,11 @@
   @Example
     <code>
     // Set RB5 low (0)
-    LED4_ADC_SetLow();
+    SHUTDOWN_IN_SetLow();
     </code>
 
 */
-#define LED4_ADC_SetLow()           (_LATB5 = 0)
+#define SHUTDOWN_IN_SetLow()           (_LATB5 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RB5, using LATB5.
@@ -705,11 +705,11 @@
   @Example
     <code>
     // Toggle RB5
-    LED4_ADC_Toggle();
+    SHUTDOWN_IN_Toggle();
     </code>
 
 */
-#define LED4_ADC_Toggle()           (_LATB5 ^= 1)
+#define SHUTDOWN_IN_Toggle()           (_LATB5 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RB5.
@@ -731,11 +731,11 @@
     uint16_t portValue;
 
     // Read RB5
-    postValue = LED4_ADC_GetValue();
+    postValue = SHUTDOWN_IN_GetValue();
     </code>
 
 */
-#define LED4_ADC_GetValue()         _RB5
+#define SHUTDOWN_IN_GetValue()         _RB5
 /**
   @Summary
     Configures the GPIO pin, RB5, as an input.
@@ -755,11 +755,11 @@
   @Example
     <code>
     // Sets the RB5 as an input
-    LED4_ADC_SetDigitalInput();
+    SHUTDOWN_IN_SetDigitalInput();
     </code>
 
 */
-#define LED4_ADC_SetDigitalInput()  (_TRISB5 = 1)
+#define SHUTDOWN_IN_SetDigitalInput()  (_TRISB5 = 1)
 /**
   @Summary
     Configures the GPIO pin, RB5, as an output.
@@ -779,11 +779,11 @@
   @Example
     <code>
     // Sets the RB5 as an output
-    LED4_ADC_SetDigitalOutput();
+    SHUTDOWN_IN_SetDigitalOutput();
     </code>
 
 */
-#define LED4_ADC_SetDigitalOutput() (_TRISB5 = 0)
+#define SHUTDOWN_IN_SetDigitalOutput() (_TRISB5 = 0)
 /**
   @Summary
     Sets the GPIO pin, RB6, high using LATB6.

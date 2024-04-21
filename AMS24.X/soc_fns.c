@@ -137,7 +137,7 @@ void timer1_interrupt(void)
 //interrupt is triggered when sampling is complete
 void adc1_cs_lo_interrupt(uint16_t valCS_LO)
 {
-    LED4_ADC_SetHigh();
+    // LED4_ADC_SetHigh();
     
     // if current low enough to be measured by low channel
     if(valCS_LO < USE_LO_THRESHOLD)
@@ -155,5 +155,5 @@ void adc1_cs_lo_interrupt(uint16_t valCS_LO)
         sample_hi_count = sample_hi_count + 1;
     }
 
-    LED4_ADC_SetLow();
+    // LED4_ADC_SetLow();
 }

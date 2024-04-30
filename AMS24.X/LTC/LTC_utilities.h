@@ -14,6 +14,8 @@ extern "C" {
 
 #include <stdint.h>
 
+extern uint16_t cellVoltageMax;
+
 #define DUMMY                0xFF
     
 #define CMD_SIZE_BYTES       4

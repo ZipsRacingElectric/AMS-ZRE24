@@ -10,6 +10,8 @@
 #include "../mcc_generated_files/pin_manager.h"
 #include "../global_constants.h"
 
+uint16_t cellVoltageMax = CELL_VOLTAGE_MAX;
+
 ///////////////////////// Config Register A ///////////////////////////////////
 // see LTC6813 datasheet page 60 for config register contents
 uint8_t cfgra_gpio5_1[NUM_ICS];

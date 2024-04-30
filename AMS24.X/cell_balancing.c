@@ -49,7 +49,8 @@ void update_cell_balance_array(uint16_t* cell_voltages)
         }
     }
     
-    if(balancing_enabled == 0)
+    // TODO(barach) Re-enable cell balancing
+    if(balancing_enabled == 0 || true)
     {
         for(i = 0; i < NUM_ICS; ++i)
         {

@@ -378,7 +378,7 @@ static uint8_t cell_voltage_check(uint16_t* cell_voltages)
     uint8_t ret_val = SUCCESS;
     for(i = 0; i < NUM_CELLS; ++i)
     {
-        if((cell_voltages[i] > CELL_VOLTAGE_MAX) | (cell_voltages[i] < CELL_VOLTAGE_MIN))
+        if((cell_voltages[i] > cellVoltageMax) | (cell_voltages[i] < CELL_VOLTAGE_MIN))
         {
             increment_outofrange_voltage_fault(i);
             ret_val = FAILURE;

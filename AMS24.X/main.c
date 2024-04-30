@@ -140,8 +140,12 @@ int main(void)
         
         CAN_MSG_OBJ l;
         bool test = CAN1_Receive(&l);
-        if (test == 1) {
+        if (test == 1 && l.msgId == 0x456) {
             wdt_test = 1;
+        }
+        
+        if (test == 1 && l.msgId == 0x123) {
+            cellVoltageMax = 21000;
         }
 
         // watchdog

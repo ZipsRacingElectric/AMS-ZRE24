@@ -13693,7 +13693,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="ECAN1" registerAlias="CI" settingAlias="enable"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="ECAN1" registerAlias="CI" settingAlias="flag"/>
@@ -24529,11 +24529,11 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="RESET" registerAlias="RCON"/>
-         <value>0</value>
+         <value>3</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="RESET" registerAlias="RCON" settingAlias="BOR"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="RESET" registerAlias="RCON" settingAlias="EXTR"/>
@@ -24549,7 +24549,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="RESET" registerAlias="RCON" settingAlias="POR"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="RESET" registerAlias="RCON" settingAlias="SLEEP"/>
@@ -25841,7 +25841,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="System Module" registerAlias="FWDT"/>
-         <value>1016</value>
+         <value>920</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="System Module" registerAlias="FALTREG" settingAlias="CTXT1"/>
@@ -25965,7 +25965,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="System Module" registerAlias="FWDT" settingAlias="FWDTEN"/>
-         <value>ON</value>
+         <value>OFF</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="System Module" registerAlias="FWDT" settingAlias="FWPSA"/>
@@ -26417,7 +26417,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="WATCHDOG" name="customFWDTEN"/>
-         <value>WDT Enabled</value>
+         <value>WDT and SWDTEN disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="WATCHDOG" name="customMasterSlaveViewerEnable"/>
@@ -26451,11 +26451,11 @@
       </entry>
       <entry>
          <file>mcc_generated_files/can1.c</file>
-         <hash>e2ff616f6949e181aedccc827b7a8642b0589d1d10168a3c9ea8d626b287c779</hash>
+         <hash>319516873fda6a57585c281c05a3bd26eba726ed12b3992f882767d76d80f9f9</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/can1.h</file>
-         <hash>e001330c5151d019e51d9886862788bc15add7431cd1f5a150ce62ccc2b426be</hash>
+         <hash>a1fcc03183aad5a99a1fd2401b5180ff57fa1f157b61020f340e40ffbf84f5db</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/can2.c</file>
@@ -26491,7 +26491,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files/interrupt_manager.c</file>
-         <hash>7db2cf16376729bbb184e4112a993fe202360db71f8ecbb73962b2b308255f9b</hash>
+         <hash>8c48a7cdbfe04129ab6ab0903fdd3c20f2daaad5b84007b98b440868190516bc</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/interrupt_manager.h</file>
@@ -26503,11 +26503,11 @@
       </entry>
       <entry>
          <file>mcc_generated_files/mcc.h</file>
-         <hash>e07e79742966f68e170d01510d9c9f318960078a1ebadff1724f92807c6b7df2</hash>
+         <hash>07ce0bb4b2383d5ccd36a0c9545876d118ea6e9f9e6153368e059b2da36c1f36</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/pin_manager.c</file>
-         <hash>de7c25b4d26f3f0a6ff82e36fe836886c28ad9f263ebd2679aa793f84af94057</hash>
+         <hash>424ae5b282dcdf7b4528a975227c57ba122c6761ffd0fdb71166aa24f370bd54</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/pin_manager.h</file>
@@ -26535,7 +26535,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files/system.c</file>
-         <hash>a9c98aed21ef9ecc117015b8b14ceffea148622a168604d5e3121dcae0661f94</hash>
+         <hash>b9348e4edb935c97ebe942ed8d89ce2ef8d8bfb350c3cc022a7fe4092237b6f2</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/system.h</file>

@@ -61,9 +61,6 @@ void INTERRUPT_Initialize (void)
     //    CRXI: CAN 2 Rx Data Ready
     //    Priority: 1
         IPC13bits.C2RXIP = 1;
-    //    CI: CAN 1 combined sources
-    //    Priority: 1
-        IPC8bits.C1IP = 1;
     //    CTXI: CAN 1 Tx Data Request
     //    Priority: 1
         IPC17bits.C1TXIP = 1;

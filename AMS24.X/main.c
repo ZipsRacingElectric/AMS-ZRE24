@@ -59,7 +59,6 @@
 #include "eeprom.h"
 
 //TODO why are these globals?
-int wdt_test = 0;
 uint16_t cell_voltages[NUM_CELLS];
 uint16_t pack_temperatures[NUM_TEMP_SENSORS];
 uint32_t sense_line_status[NUM_ICS];
@@ -98,7 +97,6 @@ int main(void)
     
     while (1)
     {
-        ClrWdt();
         LED1_HEARTBEAT_Toggle();
         // WARN: don't put all the CAN output back to back to back here, 
         //       the transmit buffers will overflow
@@ -140,22 +138,18 @@ int main(void)
         
         CAN_MSG_OBJ l;
         bool test = CAN1_Receive(&l);
-        if (test == 1 && l.msgId == 0x456) {
-            wdt_test = 1;
+        
+        // Software triggered fault.
+        if (test == 1 && l.msgId == 0x123)
+        {
+            cellVoltageMax = CELL_VOLTAGE_MIN;
         }
         
-        if (test == 1 && l.msgId == 0x123) {
-            cellVoltageMax = 21000;
+        // Reset software fault.
+        if (test == 1 && l.msgId == 0x456)
+        {
+            cellVoltageMax = CELL_VOLTAGE_MAX;
         }
-
-        // watchdog
-
-        while(wdt_test) {
-            Nop();
-            LED3_TMR1_Toggle();
-        }
-        // set LED 3 to high
-
     }
     return 1; 
 }

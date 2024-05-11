@@ -90,11 +90,7 @@ static void CAN1_DMACopy(uint8_t buffer_number, CAN_MSG_OBJ *message);
 static void CAN1_MessageToBuffer(uint16_t* buffer, CAN_MSG_OBJ *message);
 
 // CAN1 Default Interrupt Handler
-static void (*CAN1_BusErrorHandler)(void) = NULL;
-static void (*CAN1_TxErrorPassiveHandler)(void) = NULL;
-static void (*CAN1_RxErrorPassiveHandler)(void) = NULL;
 static void (*CAN1_BusWakeUpActivityInterruptHandler)(void) = NULL;
-static void (*CAN1_RxBufferInterruptHandler)(void) = NULL;
 
 /**
  Section: Private Function Definitions
@@ -315,26 +311,11 @@ void CAN1_Initialize(void)
     while(C1CTRL1bits.OPMODE != CAN_NORMAL_OPERATION_MODE);	
 
     /* Initialize Interrupt Handler*/
-    CAN1_SetBusErrorHandler(&CAN1_DefaultBusErrorHandler);
-    CAN1_SetTxErrorPassiveHandler(&CAN1_DefaultTxErrorPassiveHandler);
-    CAN1_SetRxErrorPassiveHandler(&CAN1_DefaultRxErrorPassiveHandler);
     CAN1_SetBusWakeUpActivityInterruptHandler(&CAN1_DefaultBusWakeUpActivityHandler);
-    CAN1_SetRxBufferInterruptHandler(&CAN1_DefaultReceiveBufferHandler);
-    	
+
     /* Enable CAN1 Interrupt */
     IEC2bits.C1IE = 1;
 
-    /* Enable Receive interrupt */
-    C1INTEbits.RBIE = 1;
-	
-    /* Enable Error interrupt*/
-    C1INTEbits.ERRIE = 1;
-
-    /* Enable TxReq IEC bit */
-    IEC4bits.C1TXIE = 1;
-    
-    /* Enable RxReady IEC bit */
-    IEC2bits.C1RXIE = 1;
 }
 
 void CAN1_TransmitEnable()
@@ -402,7 +383,7 @@ CAN_TX_MSG_REQUEST_STATUS CAN1_Transmit(CAN_TX_PRIOIRTY priority, CAN_MSG_OBJ *s
     CAN1_TX_CONTROLS * pTxControls = (CAN1_TX_CONTROLS*)&C1TR01CON;
     uint_fast8_t i;
     bool messageSent = false;
-
+    
     // CAN 2.0 mode DLC supports upto 8 byte 
     if(sendCanMsg->field.dlc > CAN_DLC_8) 
     {
@@ -572,39 +553,9 @@ void CAN1_Sleep(void)
     //Wake up from sleep should set the CAN1 module straight into Normal mode
 }
 
-void __attribute__((weak)) CAN1_DefaultBusErrorHandler(void) 
-{
-    CAN1_CallbackBusOff();
-}
-
-void CAN1_SetBusErrorHandler(void *handler)
-{
-    CAN1_BusErrorHandler = handler;
-}
-
-void __attribute__((weak)) CAN1_DefaultTxErrorPassiveHandler(void) 
-{
-    CAN1_CallbackTxErrorPassive();
-}
-
-void CAN1_SetTxErrorPassiveHandler(void *handler)
-{
-    CAN1_TxErrorPassiveHandler = handler;
-}
-
-void __attribute__((weak)) CAN1_DefaultRxErrorPassiveHandler(void) 
-{
-    CAN1_CallbackRxErrorPassive();
-}
-
-void CAN1_SetRxErrorPassiveHandler(void *handler)
-{
-    CAN1_RxErrorPassiveHandler = handler;
-}
-
 void __attribute__((weak)) CAN1_DefaultBusWakeUpActivityHandler(void) 
 {
-    
+
 }
 
 void CAN1_SetBusWakeUpActivityInterruptHandler(void *handler)
@@ -612,68 +563,19 @@ void CAN1_SetBusWakeUpActivityInterruptHandler(void *handler)
     CAN1_BusWakeUpActivityInterruptHandler = handler;
 }
 
-void __attribute__((weak)) CAN1_DefaultReceiveBufferHandler(void) 
-{
-    CAN1_CallbackMessageReceived();
-}
-
-void CAN1_SetRxBufferInterruptHandler(void *handler)
-{
-    CAN1_RxBufferInterruptHandler = handler;
-}
-
 void __attribute__((__interrupt__, no_auto_psv)) _C1Interrupt(void)
 {
-    if (C1INTFbits.ERRIF)
+    if(C1INTFbits.WAKIF)
     {
-        if (C1INTFbits.TXBO == 1)
+        if(CAN1_BusWakeUpActivityInterruptHandler)
         {
-            if(CAN1_BusErrorHandler)
-            {
-                CAN1_BusErrorHandler();
-            }
+            CAN1_BusWakeUpActivityInterruptHandler();
         }
-        
-        if (C1INTFbits.TXBP == 1)
-        {
-            if(CAN1_TxErrorPassiveHandler)
-            {
-                CAN1_TxErrorPassiveHandler();
-            }
-        }
-
-        if (C1INTFbits.RXBP == 1)
-        {
-            if(CAN1_RxErrorPassiveHandler)
-            {
-                CAN1_RxErrorPassiveHandler();
-            }
-        }
-
-        /* Call error notification function */
-        C1INTFbits.ERRIF = 0;
+	
+        C1INTFbits.WAKIF = 0;
     }
-
-    if(C1INTFbits.RBIF)
-    {
-        if(CAN1_RxBufferInterruptHandler)
-        {
-            CAN1_RxBufferInterruptHandler();
-        }
-                
-        C1INTFbits.RBIF = 0;  
-    } 
     
-   
     IFS2bits.C1IF = 0;
-}
-
-void __attribute__((__interrupt__, no_auto_psv)) _C1TxInterrupt(void) {
-    IFS4bits.C1TXIF = 0;
-}
-
-void __attribute__((__interrupt__, no_auto_psv)) _C1RxInterrupt(void) {
-    IFS2bits.C1RXIF = 0;
 }
 
 /*******************************************************************************
@@ -696,7 +598,6 @@ void __attribute__((__interrupt__, no_auto_psv)) _C1RxInterrupt(void) {
 *    Return Value:      true - Transmit successful
 *                       false - Transmit failure                                                                              
 ******************************************************************************/
-
 bool CAN1_transmit(CAN_TX_PRIOIRTY priority, uCAN_MSG *sendCanMsg) 
 {
     uint8_t msgObjData[8] = {0};
@@ -729,7 +630,6 @@ bool CAN1_transmit(CAN_TX_PRIOIRTY priority, uCAN_MSG *sendCanMsg)
 *    Return Value:      true - Receive successful
 *                       false - Receive failure                                                                              
 ******************************************************************************/
-
 bool CAN1_receive(uCAN_MSG *recCanMsg) 
 {   
     bool messageReceived = false;
@@ -854,27 +754,6 @@ void CAN1_sleep(void)
     while(C1CTRL1bits.OPMODE != CAN_DISABLE_MODE);
     
     //Wake up from sleep should set the CAN1 module straight into Normal mode
-}
-
-/* Null weak implementations of callback functions. */
-void __attribute__((weak)) CAN1_CallbackBusOff(void)
-{
-
-}
-
-void __attribute__((weak)) CAN1_CallbackTxErrorPassive(void)
-{
-
-}
-
-void __attribute__((weak)) CAN1_CallbackRxErrorPassive(void)
-{
-
-}
-
-void __attribute__((weak)) CAN1_CallbackMessageReceived(void)
-{
-
 }
 
 /**

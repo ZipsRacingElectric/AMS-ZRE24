@@ -123,9 +123,9 @@ void check_for_fault(void)
     
     for(i = 0; i < NUM_ICS * TEMP_SENSORS_PER_IC; ++i)
     {
-        // TODO(barach): Bad themistor check
-        if (i == 3)
-            break;
+        // TODO(Barach): Thermistor check
+        if (i == 16 || i == 20)
+            continue;
         
         if(outofrange_temperature_fault[i] > OUTOFRANGE_TEMPERATURE_MAX_FAULTS)
         {
@@ -136,10 +136,6 @@ void check_for_fault(void)
     
     for(i = 0; i < NUM_ICS * AUX_REGISTERS_PER_IC; ++i)
     {
-        // TODO(barach): Bad themistor check
-        if (i == 3)
-            break;
-        
         if(missing_temperature_measurement_fault[i] > MISSING_TEMP_MEASUREMENT_FAULTS_MAX)
         {
             shutdown_car(); 

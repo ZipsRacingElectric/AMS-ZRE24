@@ -5,6 +5,7 @@
  */
 #include "cell_balancing.h"
 #include "LTC/LTC_utilities.h"
+#include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/tmr2.h"
 #include <stdint.h>
 #include <stdbool.h>
@@ -49,8 +50,8 @@ void update_cell_balance_array(uint16_t* cell_voltages)
         }
     }
     
-    // TODO(barach) Re-enable cell balancing
-    if(balancing_enabled == 0 || true)
+    // If balancing is disabled or shutdown loop is open, clear all bits.
+    if(balancing_enabled == 0 || !HVD_INTERLOCK_STATUS_GetValue ())
     {
         for(i = 0; i < NUM_ICS; ++i)
         {
